@@ -1,0 +1,18 @@
+.reveal .slides section.first h2, .reveal .slides section.first small {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+}
+
+.reveal .slides section.first small {
+    padding: 5px;
+}
+
+.reveal section img {
+    border: none;
+}
+
+.reveal .timer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
