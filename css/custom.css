@@ -25,3 +25,71 @@
     width: 100px;
     box-shadow: none;
 }
+
+.browsers .browser.chrome img {
+    animation-duration: 3s;
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.browsers .browser.android img {
+    animation-duration: 2s;
+    animation-name: fast-rotation;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.browsers .browser.safari img {
+    animation-duration: 5s;
+    animation-name: lean;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.browsers .browser.firefox img {
+    animation-duration: 4s;
+    animation-name: perspective;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes fast-rotation {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(3turn);
+  }
+}
+
+@keyframes lean {
+  from {
+    transform: rotateX(0turn);
+  }
+
+  to {
+    transform: rotateX(0.20turn);
+  }
+}
+
+@keyframes perspective {
+  from {
+    transform: skew(0deg);
+  }
+
+  to {
+    transform: skew(15deg);
+  }
+}
