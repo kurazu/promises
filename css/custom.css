@@ -16,3 +16,12 @@
     bottom: 0;
     left: 0;
 }
+
+.browsers .browser {
+    display: inline-block;
+}
+
+.browsers .browser img {
+    width: 100px;
+    box-shadow: none;
+}
