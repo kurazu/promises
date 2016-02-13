@@ -41,15 +41,21 @@
 }
 
 .browsers .browser.safari img {
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-name: lean;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
 
 .browsers .browser.firefox img {
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-name: perspective;
+    animation-iteration-count: infinite;
+}
+
+.browsers .browser.opera img {
+    animation-duration: 2.5s;
+    animation-name: flash;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
@@ -84,12 +90,34 @@
   }
 }
 
+@keyframes flash {
+    from {
+      opacity: 1;
+    }
+
+    to {
+        opacity: 0.3;
+    }
+}
+
 @keyframes perspective {
   from {
     transform: skew(0deg);
   }
 
-  to {
+  25% {
     transform: skew(15deg);
+  }
+
+  50% {
+    transform: skew(0deg);
+  }
+
+  75% {
+    transform: skew(-15deg);
+  }
+
+  to {
+    transform: skew(0deg);
   }
 }
