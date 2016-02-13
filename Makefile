@@ -1,37 +1,13 @@
 all:
-	for file in examples/*.c examples/*.cpp examples/*.py examples/*.pyx examples/*.sh examples/*.txt examples/*.pytb examples/*.pycon examples/*.patch; \
+	for file in examples/*.js; \
 	do \
-		if test '(' "$${file}" '!=' 'examples/*.sh' ')' -a '(' "$${file}" '!=' 'examples/*.txt' ')' -a '(' "$${file}" '!=' 'examples/*.pytb' ')' -a '(' "$${file}" '!=' 'examples/*.py' ')' -a '(' "$${file}" '!=' 'examples/*.pycon' ')' -a '(' "$${file}" '!=' 'examples/*.patch' ')'; \
+		if test "$${file}" '!=' 'examples/*.js'; \
 		then \
 			echo -n "Pygmentizing $${file} ... "; \
 			outfile="$${file}.html"; \
 			case "$${file}" in \
-				*.c) \
-					lexer="c"; \
-					;; \
-				*.cpp) \
-					lexer="cpp"; \
-					;; \
-				*.pyx) \
-					lexer="cython"; \
-					;; \
-				*.py) \
-					lexer="python"; \
-					;; \
-				*.sh) \
-					lexer="bash"; \
-					;; \
-				*.txt) \
-					lexer="text"; \
-					;; \
-				*.pytb) \
-					lexer="pytb"; \
-					;; \
-				*.pycon) \
-					lexer="pycon"; \
-					;; \
-				*.patch) \
-					lexer="udiff"; \
+				*.js) \
+					lexer="js"; \
 					;; \
 				*) \
 					echo "Unknown file type $${file} extension $${extension}" ; \

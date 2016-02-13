@@ -1,9 +1,13 @@
-.reveal .slides section.first h2, .reveal .slides section.first small {
-    background: rgba(255, 255, 255, 0.5);
+.reveal .slides section.protect-bg h1,
+.reveal .slides section.protect-bg h2,
+.reveal .slides section.protect-bg h3,
+.reveal .slides section.protect-bg p,
+.reveal .slides section.protect-bg small {
+    background: rgba(255, 255, 255, 0.7s);
     border-radius: 6px;
 }
 
-.reveal .slides section.first small {
+.reveal .slides section.protect-bg small {
     padding: 5px;
 }
 
@@ -58,6 +62,12 @@
     animation-name: flash;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+}
+
+.browsers .browser.edge img {
+    animation-duration: 3s;
+    animation-name: shake;
+    animation-iteration-count: infinite;
 }
 
 @keyframes rotation {
@@ -120,4 +130,50 @@
   to {
     transform: skew(0deg);
   }
+}
+
+@keyframes shake {
+    from {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(10%, 10%);
+    }
+
+    20% {
+        transform: translate(-10%, 20%);
+    }
+
+    30% {
+        transform: translate(-15%, 5%);
+    }
+
+    40% {
+        transform: translate(-5%, -10%);
+    }
+
+    50% {
+        transform: translate(-10%, 5%);
+    }
+
+    60% {
+        transform: translate(-5%, 15%);
+    }
+
+    70% {
+        transform: translate(5%, -5%);
+    }
+
+    80% {
+        transform: translate(10%, 0%);
+    }
+
+    90% {
+        transform: translate(-5%, -5%);
+    }
+
+    to {
+        transform: translate(0, 0);
+    }
 }
