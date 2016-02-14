@@ -1,7 +1,7 @@
 function fetchCities() {
     var cities = ['Poznań', 'Wrocław', 'Piła', 'Łódź'];
     return new Promise(function(resolve, reject) {
-        setTimeout(resolve.bind(null, cities));
+        setTimeout(resolve.bind(null, cities), 1000);
     });
 }
 

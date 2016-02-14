@@ -1,5 +1,5 @@
 all:
-	for file in examples/*.js; \
+	for file in examples/*.js examples/*.txt; \
 	do \
 		if test "$${file}" '!=' 'examples/*.js'; \
 		then \
@@ -8,6 +8,9 @@ all:
 			case "$${file}" in \
 				*.js) \
 					lexer="js"; \
+					;; \
+				*.txt) \
+					lexer="text"; \
 					;; \
 				*) \
 					echo "Unknown file type $${file} extension $${extension}" ; \
