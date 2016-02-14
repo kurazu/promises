@@ -1,0 +1,96 @@
+<section>
+    <h1>Riddle</h1>
+    <include src="examples/riddle.js.html"></include>
+    <h2>What is the order of messages logged?</h2>
+</section>
+
+<section>
+    <h1>Answer</h1>
+    <include src="examples/riddle.js.html"></include>
+    <include src="examples/riddle.txt.html"></include>
+</section>
+
+<section>
+    <h1>The real riddle</h1>
+    <include src="examples/riddle.js.html"></include>
+    <p>How to wrap <code>console.log('surprise')</code> so it would be executed <span style="text-decoration: underline">before</span> <code>console.log('timeout')</code>?</p>
+</section>
+
+<section>
+    <h1>The real answer</h1>
+    <include src="examples/riddle_solution.js.html"></include>
+    <include src="examples/riddle_solution.txt.html"></include>
+</section>
+
+<section>
+    <h1>Why?</h1>
+    <img src="img/wtf.jpg">
+</section>
+
+<section>
+    <h1>Microtasks</h1>
+    <img src="img/magnets.jpg">
+</section>
+
+<section>
+    <h2>What are microtasks?</h2>
+    <h1 class="fragment">What are tasks?</h1>
+</section>
+
+<section>
+    <h1>Tasks</h1>
+    <ul>
+        <li>mouse click callback firing</li>
+        <li>parsing HTML</li>
+        <li><code>setTimeout</code></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Microtasks</h1>
+    <ul>
+        <li>mutation observer callbacks (<code>MutationObserver</code>)</li>
+        <li>promise callbacks</li>
+    </ul>
+</section>
+
+<section>
+    <h1>How are those handled?</h1>
+</section>
+
+<section>
+    <h1>Did you know?</h1>
+    <h2 class="fragment">The event loop has more task queues.</h2>
+</section>
+
+<section>
+    <h2>Event loop processing</h2>
+    <ol>
+        <li>pick up a task from the task queue</li>
+        <li>run the task</li>
+        <li>
+            handle microtasks
+            <ol>
+                <li>pick up oldest microtask from microtask queue</li>
+                <li>run the microtask</li>
+                <li>repeat until there are no more microtasks</li>
+            </ol>
+        </li>
+        <li>render</li>
+        <li>repeat</li>
+    </ol>
+</section>
+
+<section>
+    <h2>Are Promises synchronous?</h2>
+    <table>
+        <tr>
+            <td>
+                <include src="examples/sync.js.html"></include>
+            </td>
+            <td>
+                <include src="examples/sync.txt.html"></include>
+            </td>
+        </tr>
+    </table>
+</section>
