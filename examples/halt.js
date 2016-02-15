@@ -1,25 +1,33 @@
 window.addEventListener('load', function() {
     var functions = {};
 
-    functions.tsum = function(max) {
-        var number = 1,
+    functions.timeout = function(callback) {
+        setTimeout(callback, 0);
+    };
+
+    functions.promise = function(callback) {
+        Promise.resolve().then(callback);
+    };
+
+    function sum(defer, iterations) {
+        var iteration = 0,
             sum = 0;
 
         return new Promise(function(resolve, reject) {
             function step() {
-                if (number > max) {
+                var i;
+                if (iteration >= iterations) {
                     resolve(sum);
                 } else {
-                    sum += number++;
-                    setTimeout(step, 0);
+                    for (i = 0; i < Math.pow(10, 7); i++) {
+                        sum += i;
+                    }
+                    iteration++;
+                    defer(step);
                 }
             }
-            setTimeout(step, 0);
+            defer(step);
         });
-    };
-
-    functions.psum = function(max) {
-
     };
 
     Array.prototype.forEach.call(document.querySelectorAll('.spinner'), function(spinner) {
@@ -30,20 +38,20 @@ window.addEventListener('load', function() {
 
     });
 
-    function calculate(spinner, promiseProducer) {
+    function calculate(spinner, deferFunc) {
         var promise,
             ts;
         spinner.classList.add('working');
 
         ts = +new Date;
-        promise = promiseProducer(Math.pow(10, 4));
+        promise = sum(deferFunc, 1000);
         promise.then(function(result) {
             var elapsed;
 
             elapsed = (+new Date) - ts;
             spinner.classList.remove('working');
             spinner.classList.add('done');
-            spinner.innerText = result + ' in ' + (elapsed / 1000) + 's';
+            spinner.innerText = (elapsed / 1000).toFixed(1) + 's';
         });
 
     }
