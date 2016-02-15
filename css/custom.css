@@ -177,3 +177,15 @@
         transform: translate(0, 0);
     }
 }
+
+.reveal h1 code {
+    text-transform: none;
+}
+
+.reveal h2 code {
+    text-transform: none;
+}
+
+.reveal h3 code {
+    text-transform: none;
+}
