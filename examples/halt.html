@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Halt</title>
+    <style>
+        .spinner {
+            animation-name: spin;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+            display: inline-block;
+            font-size: 200px;
+        }
+
+        .spinner.working {
+            color: yellow;
+        }
+
+        .spinner.done {
+            color: green;
+            font-size: 50px;
+            animation-play-state: paused;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="spinner" data-func="tsum">☯</div>
+<div class="spinner" data-func="psum">☯</div>
+
+<script src="halt.js"></script>
+</body>
+</html>
