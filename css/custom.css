@@ -189,3 +189,32 @@
 .reveal h3 code {
     text-transform: none;
 }
+
+.reveal .spinner {
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+
+    display: inline-block;
+    font-size: 800%;
+}
+
+.reveal .spinner.working {
+    color: yellow;
+}
+
+.reveal .spinner.done {
+    color: green;
+    font-size: 200%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

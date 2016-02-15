@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+window.addEventListener('included', function() {
     var functions = {};
 
     functions.timeout = function(callback) {
@@ -44,7 +44,7 @@ window.addEventListener('load', function() {
         spinner.classList.add('working');
 
         ts = +new Date;
-        promise = sum(deferFunc, 1000);
+        promise = sum(deferFunc, 100);
         promise.then(function(result) {
             var elapsed;
 
