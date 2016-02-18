@@ -47,6 +47,7 @@
                 <include src="slides/what.html"></include>
                 <include src="slides/where.html"></include>
                 <include src="slides/combining.html"></include>
+                <include src="slides/utils.html"></include>
                 <include src="slides/sync.html"></include>
                 <include src="slides/summary.html"></include>
 			</div>
@@ -94,6 +95,16 @@
                 //parallaxBackgroundHorizontal: 100,
                 //parallaxBackgroundVertical: 100
 			});
+            Reveal.addEventListener('slidechanged', function(event) {
+                var currentSlide = event.currentSlide;
+
+                if (currentSlide.classList.contains("animations")) {
+                    currentSlide.classList.remove('animate');
+                    setTimeout(function() {
+                        currentSlide.classList.add('animate');
+                    }, 0);
+                }
+            });
         }
 
         window.addEventListener('load', onLoad, false);

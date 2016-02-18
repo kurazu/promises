@@ -1,6 +1,0 @@
-promise executor
-after promise definition
-after attaching handler
-uppercase
-split
-handler ["ZUPA", "GRZYBOWA"]

@@ -218,3 +218,35 @@
         transform: rotate(360deg);
     }
 }
+
+.anchor {
+    position: relative;
+}
+
+.reveal section img.clock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: initial;
+    box-shadow: none;
+
+    animation-iteration-count: 1;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+}
+
+.reveal section.animate img.clock {
+    animation-name: fadein;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
