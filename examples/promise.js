@@ -1,11 +1,15 @@
 function fetchDataFromBackend(options) {
     return new Promise(function(resolve, reject) {
-        setTimeout(function() {
-            if (Math.random() < 0.5) {
-                resolve('DATA');
-            } else {
-                reject(new Error('Bad luck!'));
+        $.ajax({
+            url: options.url,
+            method: options.method,
+            data: options.data,
+            success: function(data, textStatus, jqXHR) {
+                resolve(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                reject(errorThrown);
             }
-        }, 2000);
+        });
     });
 }

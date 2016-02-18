@@ -1,4 +1,3 @@
 start
-middle
 end
 timeout

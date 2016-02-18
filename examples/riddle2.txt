@@ -1,0 +1,6 @@
+start
+middle
+promise constructor
+end
+promise then 7
+timeout

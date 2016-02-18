@@ -4,8 +4,11 @@
         console.log('timeout');
     }, 0);
     console.log('middle');
-    Promise.resolve().then(function() {
-        console.log('surprize');
+    new Promise(function(resolve, reject) {
+        console.log('promise constructor');
+        resolve(7);
+    }).then(function(n) {
+        console.log('promise then', n);
     });
     console.log('end');
 })();

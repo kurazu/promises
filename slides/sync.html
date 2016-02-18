@@ -12,14 +12,14 @@
 
 <section>
     <h1>The real riddle</h1>
-    <include src="examples/riddle.js.html"></include>
-    <p>How to wrap <code>console.log('surprise')</code> so it would be executed <span style="text-decoration: underline">before</span> <code>console.log('timeout')</code>?</p>
+    <include src="examples/riddle2.js.html"></include>
+    <h2>What is the order of messages logged?</h2>
 </section>
 
 <section>
     <h1>The real answer</h1>
-    <include src="examples/riddle_solution.js.html"></include>
-    <include src="examples/riddle_solution.txt.html"></include>
+    <include src="examples/riddle2.js.html"></include>
+    <include src="examples/riddle2.txt.html"></include>
 </section>
 
 <section>
@@ -66,18 +66,18 @@
 <section>
     <h2>Event loop processing</h2>
     <ol>
-        <li>pick up a task from the task queue</li>
-        <li>run the task</li>
+        <li>pick up a <strong>task</strong> from the <em>task queue</em></li>
+        <li>run the <strong>task</strong></li>
         <li>
-            handle microtasks
+            handle <strong>microtasks</strong>
             <ol>
-                <li>pick up oldest microtask from microtask queue</li>
-                <li>run the microtask</li>
-                <li>repeat until there are no more microtasks</li>
+                <li>pick up oldest <strong>microtask</strong> from <em>microtask queue</em></li>
+                <li>run the <strong>microtask</strong></li>
+                <li><span style="text-decoration: underline">repeat</span> until there are no more <strong>microtasks</strong></li>
             </ol>
         </li>
         <li>render</li>
-        <li>repeat</li>
+        <li>go to 1</li>
     </ol>
 </section>
 
