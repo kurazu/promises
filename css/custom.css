@@ -198,7 +198,7 @@
     animation-fill-mode: forwards;
 
     display: inline-block;
-    font-size: 800%;
+    font-size: 1000%;
 }
 
 .reveal .spinner.working {
