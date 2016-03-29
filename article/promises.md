@@ -202,9 +202,48 @@ Promise.race([
 
 The most underestimated feature of `Promises` is the ability to chain them.
 
-Each call to `then` or `catch` actually returns a new `Promise` that is resolved after both the original promise is resolved **and** the handler finishes running.
+Each call to `then` or `catch` actually returns a new `Promise` that is resolved after both the original `Promise` is resolved **and** the handler finishes running.
+
+```
+var fetchPromise = fetchDataFromBackend(...);
+var fetchAndParsePromise = fetchPromise.then(function(rawData) {
+    return JSON.parse(rawData);
+});
+fetchAndParsePromise.then(function(parsedData) {
+    console.log('Data fetched and parsed', parsedData);
+});
+```
 
 ### Nesting
+
+The chained handlers can also return a new `Promise` instance. In such situation the resulting `Promise` will wait with resolving itself until the new, nested `Promise` is resolved.
+
+```
+var fetchConfigurationPromise = fetchConfigurationFromBackend(...);
+var fetchConfigurationAndDataPromise = fetchConfigurationPromise(configuration) {
+    var fetchDataPromise = fetchData(configuration.key);
+    return fetchDataPromise;
+});
+fetchConfigurationAndDataPromise.then(function(data) {
+    console.log('Fetched data', data);
+});
+```
+
+As we can see this gives us a powerful tool for dealing with `Promises` that depend on each other. We can elegantly build our code around this simple chaining API even for complex cases of asynchronous computations.
+
+### Stacking
+
+The handler can modify the outcome of the original `Promise`, even by 180 degrees. Using the chaining API we can turn a rejected `Promise` into a fulfilled one.
+
+```
+function fetchData() {
+    return fetchDataFromBackend().catch(function(err) {
+        return Promise.resolve(DUMMY_DATA);
+    });
+}
+```
+
+In this example we create a function that will either resolve with data from a backend endpoint or some dummy data, but will never fail (be rejected).
 
 ## The asynchronous riddle
 
