@@ -149,7 +149,10 @@ promise.catch(function(error) {
     console.error('Promise rejected with an error');
 });
 ```
+
 Depending on the `Promise` outcome, **each** callback for the appropriate event will be called, even if the previous one threw an error.
+
+The callbacks are always executed **asynchronously**.
 
 ### Utils
 
@@ -247,15 +250,79 @@ In this example we create a function that will either resolve with data from a b
 
 ## The asynchronous riddle
 
+Consider the following code:
 
+```
+(function() {
+    console.log('start');
+    setTimeout(function() {
+        console.log('timeout');
+    }, 0);
+    console.log('middle');
+    new Promise(function(resolve, reject) {
+        console.log('promise constructor');
+        resolve(7);
+    }).then(function(n) {
+        console.log('promise then', n);
+    });
+    console.log('end');
+})();
+```
+
+What will be the order of messages printed to the console?
+
+Anybody with a medium knowledge of JavaScript will figure out that in the beginning we will get:
+
+```
+start
+middle
+promise constructor
+end
+```
+
+There will be no timeout, because we know that the callback passed to `setTimeout` is executed asynchronously. Earlier we mentioned, that `Promise` executor is run synchronously, so we get the `promise constructor` message before `end`. We know that `Promise` handlers are executed asynchronously, so we don't expect to see that message yet.
+
+At this point we have 2 asynchronous tasks pending: the `setTimeout` callback and `Promise.then` handler. The surprising bit is the order in which those two will execute:
+
+```
+start
+middle
+promise constructor
+end
+promise then 7
+timeout
+```
+
+The `Promise` handler run earlier than the `setTimeout` callback, even though the latter was scheduled earlier during the program execution.
 
 ### Microtasks
+
+The reason for the strange order of execution lies within the specification of microtask handling by the JavaScript event loop.
+
+Why are **microtasks** you ask?
+
+The first question you need to ask though is: what are **tasks**?
+
+**Tasks** are the asynchronous functions the browser needs to run and that we know and love, for example:
+
+* firing a mouse click handler in response to user's action,
+* parsing HTML,
+* executing callback scheduled with `setTimeout`.
+
+**Tasks** require the browser to switch context and are rather expensive.
+
+**Microtasks** are tasks that are expected to fire much more often, including:
+
+* mutation observer callbacks (`MutationObserver`)
+* `Promise` handler callbacks
+
+Since they are expected to run often, we want to minimize the expense of running them. And so the browser gets a special algorithm for handling microtasks.
 
 ### The event loop
 
 ## Alternatives
 
-Native `Promises` should work across most modern browsers excluding Internet Explorer and some old Android browsers. It should work on recent Chrome, Firefox, Safari and Edge.
+Native `Promise`s should work across most modern browsers excluding *Internet Explorer* and some old *Android* browsers. They should work on recent *Chrome*, *Firefox*, *Safari* and *Edge*. *node.js* also supports them.
 
 There are libraries that implement the `Promise` concept or even extend it, including:
 
