@@ -61,11 +61,47 @@ Here our `fetchDataFromBackend` function gets only the parameters needed to make
 
 ## The implementation
 
+How can we implement such function?
+
+```
+function fetchDataFromBackend(options) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: options.url,
+            method: options.method,
+            data: options.data,
+            success: function(data, textStatus, jqXHR) {
+                resolve(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                reject(errorThrown);
+            }
+        });
+    });
+}
+```
+
+In the code above we are adding a native `Promise` wrapper around *jQuery* *AJAX* call. In the success handler we are **resolving** our `Promise` and in the error handler we are **rejecting** it. The function itself doesn't need to know anything about handlers that will be attached.
+
 ## Promise API
+
+As we have seen in the example above the `Promise` API seems rather simple. There is the constructor and there are functions for connecting handlers.
+
+That is all the API you need to know to start using `Promise`s.
 
 ### Constructor and executor
 
+The `Promise` constructor always receives one argument: a function called the *executor*. This *executor* is called **synchronously** from within the `Promise` constructor and the API exposes to it two callback functions: one for resolving the `Promise` (success callback, usually named `resolve`) and one for rejecting it (error callback, usually named `reject`). The *executor* usuall starts an asynchronous operation and then it uses the two callbacks to signal to the `Promise` that the operation either succeeded or failed.
+
+Both callbacks only accept one parameter. This single parameter will be the one that handlers attached to the `Promise` will later receive as the single argument. There is no use in passing multiple parameters. If you need to pass more than one value, resolve your promise with an `Array` of values and parse the `Array` back in your handler.
+
+The argument to either `resolve` or `reject` callback can be any value. It can be a `Number`, `String`, `Object`, `null`, `undefined` or an `Error` instance. `Promise`s don't care. You can `reject` the `Promise` with something that is not an `Error` instance. 
+
 ### States
+
+Promises can be in 3 states only:
+
+
 
 ### Handlers
 
