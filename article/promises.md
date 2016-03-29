@@ -101,7 +101,11 @@ The argument to either `resolve` or `reject` callback can be any value. It can b
 
 Promises can be in 3 states only:
 
+* **pending** - a `Promise` is in this state from the moment of creation until either it is resolved or rejected (either `resolve` or `reject` callback is called); `Promise` can never go back to this state once it leaves it.
+* **fulfilled** - a `Promise` enters this state when it is resolved (operation ends successfully and  `resolve` is called); `Promise` can never leave this state (not even if you call `reject`).
+* **rejected** - a `Promise` enters this state when it is rejected (operation ends with an error and  `reject` is called); `Promise` can never leave this state (not even if you call `resolve`).
 
+The `resolve` and `reject` callbacks can be called only **once** for each `Promise`. Any subsequent calls to one or the other are ignored.
 
 ### Handlers
 
