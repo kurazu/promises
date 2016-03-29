@@ -153,7 +153,7 @@ Depending on the `Promise` outcome, **each** callback for the appropriate event 
 
 ### Utils
 
-The API exposes two utility functions for creating `Promise`s that are already *fulfilled* (`Promise.resolve`) or *rejected* (`Promise.reject`) with given value at creation time. Such `Promise`s can be used in the usual fashion - handlers can be attached to them.
+The API provides two utility functions for creating `Promise`s that are already *fulfilled* (`Promise.resolve`) or *rejected* (`Promise.reject`) with given value at creation time. Such `Promise`s can be used in the usual fashion - handlers can be attached to them.
 
 ```
 Promise.resolve(17).then(function(n) {
@@ -166,7 +166,43 @@ Promise.reject(new Error('Bad luck!')).catch(function(err) {
 
 ### Combining
 
+The API provides a very useful function that creates an output `Promise` that will only be *resolved* once **all** given input `Promise`s are resolved. The output `Promise` will be *rejected* if **any** of the input `Promise`s are rejected.
+
+```
+Promise.all([
+    Promise.resolve(3),
+    Promise.resolve(4)
+]).then(function(args) {
+    console.log('Three', args[0], 'Four', args[1]);
+});
+```
+
+There is also a function that creates an output `Promise` that will assume the outcome of the one input `Promise` that resolves first (is either fullfilled successfully or rejected with an error).
+
+```
+function delayedPromise(delay, value) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(value);
+            console.log(value, 'finished');
+        }, delay);
+    });
+}
+
+Promise.race([
+    delayedPromise(735, 'Anna Kiełbasińska'),
+    delayedPromise(707, 'Ewa Swoboda'),
+    delayedPromise(728, 'Marika Popowicz')
+]).then(function(winner) {
+    console.log(winner, 'won');
+});
+```
+
 ### Chaining
+
+The most underestimated feature of `Promises` is the ability to chain them.
+
+Each call to `then` or `catch` actually returns a new `Promise` that is resolved after both the original promise is resolved **and** the handler finishes running.
 
 ### Nesting
 
