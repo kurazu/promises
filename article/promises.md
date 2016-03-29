@@ -109,7 +109,60 @@ The `resolve` and `reject` callbacks can be called only **once** for each `Promi
 
 ### Handlers
 
+One can attach a handler that will be called when `Promise` is resolved successfully using `then` method. To attach a handler that will be called when `Promise` is rejected with an error one can use `catch` method. Both methods accept one parameter - a callback, that itself accepts one argument - the value that `Promise` was resolved or rejected with.
+
+There is though a shortcut for attaching both success and error handler at the same time. Instead of writing:
+
+```
+promise.then(function(data) {
+    console.log('Data fetched', data.result.value);
+});
+promise.catch(function(error) {
+    console.error('Fetch failed', error);
+});
+```
+
+one can write:
+
+```
+promise.then(function(data) {
+    console.log('Data fetched', data.result.value);
+}, function(error) {
+    console.error('Fetch failed', error);
+});
+```
+
+The API permits registering multiple handlers for each type of outcome:
+```
+promise.then(function(data) {
+    console.log('Data fetched', data.result.value);
+    throw new Error('BOOM');
+});
+promise.then(function(data) {
+    alert('Promise resolved successfully');
+});
+promise.catch(function(error) {
+    console.error('Fetch failed', error);
+    throw new Error('BANG');
+});
+promise.catch(function(error) {
+    console.error('Promise rejected with an error');
+});
+```
+Depending on the `Promise` outcome, **each** callback for the appropriate event will be called, even if the previous one threw an error.
+
 ### Utils
+
+The API exposes two utility functions for creating `Promise`s that are already *fulfilled* (`Promise.resolve`) or *rejected* (`Promise.reject`) with given value at creation time. Such `Promise`s can be used in the usual fashion - handlers can be attached to them.
+
+```
+Promise.resolve(17).then(function(n) {
+    console.log('Seventeen', n);
+});
+Promise.reject(new Error('Bad luck!')).catch(function(err) {
+    console.error('Error', err);
+});
+```
 
 ### Combining
 
@@ -124,6 +177,16 @@ The `resolve` and `reject` callbacks can be called only **once** for each `Promi
 ### The event loop
 
 ## Alternatives
+
+Native `Promises` should work across most modern browsers excluding Internet Explorer and some old Android browsers. It should work on recent Chrome, Firefox, Safari and Edge.
+
+There are libraries that implement the `Promise` concept or even extend it, including:
+
+* **jQuery** - has it's own implementation of deferreds and promises, with more methods.
+* **AngularJS** -has it's own implementation of `Promises` (named `$q`)
+* **Q**
+* **RSVP.js**
+* **when**
 
 ## Summary
 
