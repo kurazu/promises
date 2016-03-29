@@ -247,6 +247,8 @@ In this example we create a function that will either resolve with data from a b
 
 ## The asynchronous riddle
 
+
+
 ### Microtasks
 
 ### The event loop
@@ -265,3 +267,6 @@ There are libraries that implement the `Promise` concept or even extend it, incl
 
 ## Summary
 
+The `Promise` API is one of great simplicity. Despite that one can use it to build really complex use cases that will still be easy to read, understand and maintain. The chaining feature offers hidden power that can wage the final war against the classical JavaScript callback spaghetti. And win.
+
+It's simple. It's smart. It's the future. Use it.
