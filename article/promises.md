@@ -320,6 +320,29 @@ Since they are expected to run often, we want to minimize the expense of running
 
 ### The event loop
 
+We all know how event loop operates, right?
+
+We all know that the browser has a *queue* of pending *tasks*. We all know that it takes a *task* from the queue, processes it and after the *task* has finished running, the control gets back to the browser and stuff like UI interaction or screen refresh happens. Then another iteration of the loop is executed.
+
+But it turns out that in addition to that behaviour, the browser also has a special *microtask queue*. The way that the *microtasks* in this queue are handled by the event loop is rather surprising.
+
+Here is a pseudo-code of how the event loop handles *tasks* and *microtasks*:
+
+1. pick up a **task** from the **task queue**
+2. run the **task**
+3. handle **microtasks**
+    1. pick up oldest **microtask** from **microtask queue**
+    2. run the **microtask**
+    3. **repeat** until there are no more **microtasks**
+4. render
+5. go to 1
+
+As we can see the event loop has a special step just for dealing with *microtasks*. The most interesting point about this step how different it is from processing a *task*. *Microtasks* are processed always until the queue is completely exhausted. That means that the browser UI rendering etc. is suspended untill **all** *microtasks* are processed.
+
+It's worth mentioning, that one can create new *microtasks* from within another *microtask*, which means that we can easily write code that will prevent the *microtask* queue from ever being empty and thus will *hang* our browser.
+
+From this we can draw a conclusion that microtasks are efficient (there is much less overhead in processing *microtasks* compared to *tasks*), but they should not be used for long-running sets of computations, because the browser will be unresponsive to the user while *microtasks* are running.
+
 ## Alternatives
 
 Native `Promise`s should work across most modern browsers excluding *Internet Explorer* and some old *Android* browsers. They should work on recent *Chrome*, *Firefox*, *Safari* and *Edge*. *node.js* also supports them.
