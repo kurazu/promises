@@ -31,7 +31,7 @@ Seems straight-forward enough. You've probably seen this pattern hundreds of tim
 
 But...
 
-What happens when the success handler throws an error? For example, when the `data` is missing the `result`. jQuery would need to handle the error.
+What happens when the success handler throws an error? For example, when the `data` is missing the `result`. *jQuery* would need to handle the error.
 
 And why does *jQuery* need to know how I want to handle the result? It's none of *jQuery*'s business.
 
@@ -39,7 +39,7 @@ What if I would want to call few callbacks when *AJAX* request finishes? Or if I
 
 ## The solution
 
-Wouldn't it be nicer if we could write our code like this:
+Wouldn't it be nicer if we could write our code like this, clearly separating the action of fetching backend data and taking action upon receiving result:
 
 ```
 var promise;
@@ -61,7 +61,7 @@ Here our `fetchDataFromBackend` function gets only the parameters needed to make
 
 ## The implementation
 
-How can we implement such function?
+How can we implement such function? With native `Promise`s it not hard at all:
 
 ```
 function fetchDataFromBackend(options) {
@@ -93,9 +93,9 @@ That is all the API you need to know to start using `Promise`s.
 
 The `Promise` constructor always receives one argument: a function called the *executor*. This *executor* is called **synchronously** from within the `Promise` constructor and the API exposes to it two callback functions: one for resolving the `Promise` (success callback, usually named `resolve`) and one for rejecting it (error callback, usually named `reject`). The *executor* usuall starts an asynchronous operation and then it uses the two callbacks to signal to the `Promise` that the operation either succeeded or failed.
 
-Both callbacks only accept one parameter. This single parameter will be the one that handlers attached to the `Promise` will later receive as the single argument. There is no use in passing multiple parameters. If you need to pass more than one value, resolve your promise with an `Array` of values and parse the `Array` back in your handler.
+Both callbacks only accept one parameter. This single parameter will be the one that handlers attached to the `Promise` will later receive as the single argument. There is no use in passing multiple parameters. If you need to pass more than one value, resolve your `Promise` with an `Array` of values and parse the `Array` back in your handler.
 
-The argument to either `resolve` or `reject` callback can be any value. It can be a `Number`, `String`, `Object`, `null`, `undefined` or an `Error` instance. `Promise`s don't care. You can `reject` the `Promise` with something that is not an `Error` instance. 
+The argument to either `resolve` or `reject` callback can be any value. It can be a `Number`, a `String`, an `Object`, `null`, `undefined` or an `Error` instance. `Promise`s don't care. You can `reject` the `Promise` with something that is not an `Error` instance. 
 
 ### States
 
@@ -109,7 +109,7 @@ The `resolve` and `reject` callbacks can be called only **once** for each `Promi
 
 ### Handlers
 
-One can attach a handler that will be called when `Promise` is resolved successfully using `then` method. To attach a handler that will be called when `Promise` is rejected with an error one can use `catch` method. Both methods accept one parameter - a callback, that itself accepts one argument - the value that `Promise` was resolved or rejected with.
+One can attach a handler that will be called when `Promise` is resolved successfully using `then` method. To attach a handler that will be called when `Promise` is rejected with an error one can use `catch` method. Both methods accept one parameter - a callback, that itself accepts one argument - the value that the `Promise` was resolved or rejected with.
 
 There is though a shortcut for attaching both success and error handler at the same time. Instead of writing:
 
@@ -223,7 +223,7 @@ The chained handlers can also return a new `Promise` instance. In such situation
 
 ```
 var fetchConfigurationPromise = fetchConfigurationFromBackend(...);
-var fetchConfigurationAndDataPromise = fetchConfigurationPromise(configuration) {
+var fetchConfigurationAndDataPromise = fetchConfigurationPromise.then(function(configuration) {
     var fetchDataPromise = fetchData(configuration.key);
     return fetchDataPromise;
 });
@@ -293,7 +293,7 @@ promise then 7
 timeout
 ```
 
-The `Promise` handler run earlier than the `setTimeout` callback, even though the latter was scheduled earlier during the program execution.
+The `Promise` handler runs earlier than the `setTimeout` callback, even though the latter was scheduled earlier during the program execution.
 
 ### Microtasks
 
@@ -303,7 +303,7 @@ Why are **microtasks** you ask?
 
 The first question you need to ask though is: what are **tasks**?
 
-**Tasks** are the asynchronous functions the browser needs to run and that we know and love, for example:
+**Tasks** are the functions the browser needs to run that we all know and love, for example:
 
 * firing a mouse click handler in response to user's action,
 * parsing HTML,
@@ -337,11 +337,11 @@ Here is a pseudo-code of how the event loop handles *tasks* and *microtasks*:
 4. render
 5. go to 1
 
-As we can see the event loop has a special step just for dealing with *microtasks*. The most interesting point about this step how different it is from processing a *task*. *Microtasks* are processed always until the queue is completely exhausted. That means that the browser UI rendering etc. is suspended untill **all** *microtasks* are processed.
+As we can see the event loop has a special step just for dealing with *microtasks*. The most interesting point about this step how different it is from processing a *task*. *Microtasks* are processed always until their queue is completely exhausted. That means that the browser UI rendering etc. is suspended untill **all** *microtasks* are processed.
 
 It's worth mentioning, that one can create new *microtasks* from within another *microtask*, which means that we can easily write code that will prevent the *microtask* queue from ever being empty and thus will *hang* our browser.
 
-From this we can draw a conclusion that microtasks are efficient (there is much less overhead in processing *microtasks* compared to *tasks*), but they should not be used for long-running sets of computations, because the browser will be unresponsive to the user while *microtasks* are running.
+We can draw a conclusion that microtasks are efficient (there is much less overhead in processing *microtasks* compared to *tasks*), but they should not be used for long-running sets of computations, because the browser will be unresponsive to the user while *microtasks* are running.
 
 ## Alternatives
 
@@ -349,8 +349,8 @@ Native `Promise`s should work across most modern browsers excluding *Internet Ex
 
 There are libraries that implement the `Promise` concept or even extend it, including:
 
-* **jQuery** - has it's own implementation of deferreds and promises, with more methods.
-* **AngularJS** -has it's own implementation of `Promises` (named `$q`)
+* **jQuery** - has it's own implementation of deferreds and promises, with more functionality than the native `Promise`s
+* **AngularJS** -has it's own implementation of `Promise`s (named `$q`)
 * **Q**
 * **RSVP.js**
 * **when**
