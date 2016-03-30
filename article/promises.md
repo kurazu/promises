@@ -4,7 +4,7 @@
 
 Promises are a fairly new API for dealing with deferred execution in JavaScript.
 Handling complex cases of asynchrous tasks that depend on each other can be very tricky and strainous using (possibly nested) callbacks.
-Promises deliver a new, minimalistic API that shifts the balance of responsibilites when dealing with results of deferred events.
+Promises deliver a new, minimalistic API that shifts the balance of responsibility when dealing with results of deferred events.
 The concept is beautifully simple and elegant.
 
 ## The problem
